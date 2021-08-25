@@ -1,11 +1,11 @@
-#suma Iterativa
+# Analisis de complejidad.
 
-**Análisis de complejidad temporal**
+**Suma iterativa:** \
+La suma iterativa al estar usando un solo ciclo for controlado por el valor de n, se encuentra con una complejidad de O(n).\
 
-el algoritmo recorre n pasos ya que usa un ciclo que va i = 1 hatsa n, por los que su complejidad es O(n*n) para el peor de los casos.
+**Suma recursiva**\
+La suma recursiva está usando un ciclo if controlado por el valor n del caso base (O(n)) y una operación constante que manda a llamar de nuevo al ciclo if (O(1))\
+Por lo tanto la complejidad de la suma recursiva es de O(n) ya que: O(1) * O(n).\
 
-#suma Recursiva
-
-**Análisis de complejidad temporal**
-
-El algoritmo se manda a llamar así mismo n veces, por los que su complejidad es O(n*n*n) para el peor de los casos.
+**Suma directa**\
+La suma directa lleva a cabo un único proceso matemático, por lo que su cumplejidad es de O(1).\
