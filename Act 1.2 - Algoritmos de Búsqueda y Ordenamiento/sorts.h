@@ -18,70 +18,62 @@ class Sorts{
         void copyArray(vector<T>&, vector<T>&, int, int);
         void mergeArray(vector<T>&, vector<T>&, int, int, int);
         void mergeSplit(vector<T>&, vector<T>&, int, int);
+        int ayudaBinaria(vector<T>&, int, int, int);
     public:
-        vector <T> ordenaSeleccion(const vector<T>&);
-        vector <T> ordenaBurbuja(const vector<T>&);
-        vector <T> ordenaMerge(const vector<T>&);
-        vector <T> busqSecuencial(const vector<T>&, int);
-        vector <T> busqBinaria(const vector<T>&, int);      
+        void ordenaSeleccion(vector<T>&);
+        void ordenaBurbuja(vector<T>&);
+        void ordenaMerge(vector<T>&);
+        int busqBinaria(vector<T>&, int);
+        int busqSecuencial(vector<T>&, int);  
 };
 
 template <class T>
-void Sorts<T> :: swap(vector<T> &prueba, int i, int j){
-    vector<T> v(prueba);
-    T aux= v[i];
-    v[i]= v[j];
-    v[j]= aux;
-}
-
-template <class T>
-void Sorts<T> :: copyArray(vector<T> &A, vector<T> &B, int low, int high){
-    for(int i= low, i <= high; i++){
-        A[i]= B[i];
-    }
-}
-
-template <class T>
-void Sorts<T> :: mergeArray(vector<T> &A, vector<T> &B, int low, int high, int mid){
-    int i, j, k;
-
-    i= low;
-    j= mid+1;
-    k= high;
-
-    while (i <= mid && <= high)
-    {
-        if(A[i]<A[j]){
-            B[k]= A[i];
-            i++;
-        }else{
-            B[k]= A[j];
-            j++;
-        }
-        k++;
-    }
-
-    if(i>mid){
-        for(; j <=high; j++){
-            B[k+1]= A[j];
-        }
-    }else{
-        for(; i <=mid ; i++){
-            B[k+1]= A[i];
-        }
-    }
+void Sorts<T>::swap(vector<T> &array, int i, int j){
     
+    T aux= array[i];
+    array[i]= array[j];
+    array[j]= aux;
 }
 
-template <class T>
-void Sorts<T> :: mergeSplit(vector<T> &A, vector<T> &B, int low, int high){
-    int mid;
+template<class T>
+void Sorts<T>::ordenaSeleccion(vector<T> &list){
+    for(int i= 0; i < (list.size()-1); i++){
+        int pos= i;
+        for(int j= i+1; j < list.size(); j++){
+            if(list[j] < list[pos]){
+                pos= j;
+            }
+        }
+        if(pos != i){
+                swap(list, i, pos);
+        }
+    }
+}
 
-    if(high-low < 1){
+template<class T>
+void Sorts<T>::ordenaBurbuja(vector<T> &list){
+    for(int i= list.size()-1; i >= 0; i--){
+        for(int j= 0; j < i; j++){
+            if(list[j] > list[j+1]){
+                swap(list, j, j+1);
+            }
+        }
+    }
+}
+
+template<class T>
+void Sorts<T>::ordenaMerge(vector<T> &list){
+    vector<T> temp(list.size());
+    mergeSplit(list, temp, 0, list.size()-1);
+}
+
+template<class T>
+void Sorts<T>::mergeSplit(vector<T> &A, vector<T> &B, int low, int high){
+    if(high - low < 1){
         return;
     }
 
-    mid= (high+low)/2;
+    int mid= (high + low)/2; 
 
     mergeSplit(A, B, low, mid);
     mergeSplit(A, B, mid+1, high);
@@ -91,78 +83,70 @@ void Sorts<T> :: mergeSplit(vector<T> &A, vector<T> &B, int low, int high){
     copyArray(A, B, low, high);
 }
 
-template <class T>
-vector <T> Sorts<T> :: ordenaSeleccion(const vector<T> &prueba){
-    vector <T> v(prueba);
+template<class T>
+void Sorts<T>::mergeArray(vector<T> &A, vector<T> &B, int low, int mid, int high){
+    int i, j, k;
 
-    for (int i= v.size() - 1; i > 0; i--){
-        int num= 0; 
+	i = low;
+	j = mid + 1;
+	k = low;
 
-        for (int j= 0; j<=i; j++){
+	while (i <= mid && j <= high) {
+		if (A[i] < A[j]) {
+			B[k] = A[i];
+			i++;
+		} else {
+			B[k] = A[j];
+			j++;
+		}
+		k++;
+	}
+	if (i > mid) {
+		for (; j <= high; j++) {
+			B[k++] = A[j];
+		}
+	} else {
+		for (; i <= mid; i++) {
+			B[k++] = A[i];
+		}
+	}
+}
 
-            if (v[j] > v[num]){
-                num= j;
-            }
-        }
-    
-        if (num != i){
-            swap(v, i, num);
+template<class T>
+void Sorts<T>::copyArray(vector<T> &A, vector<T> &B, int low, int high){
+    for(int i= low; i <= high; i++){
+        A[i]= B[i];
+    }
+}
+
+template<class T>
+int Sorts<T>::busqSecuencial(vector<T> &list, int val){
+    for(int i= 0; i < list.size(); i++){
+        if(list[i] == val){
+            return i;
         }
     }
-
-    return v;
+    return -1;
 }
 
-template <class T>
-vector <T> Sorts<T> :: ordenaBurbuja(const vector<T> &prueba){
-    vector <T> v(prueba);
-
-    for(int i= v.size() - 1; i > 0; i--){
-
-        for(int j= 0; j<i; j++){
-
-            if(v[j] < v[j+1]){
-                swap(v, j, j+1);
-            }
+template<class T>
+int Sorts<T>::ayudaBinaria(vector<T> &list, int low, int high, int value){
+    if(low < high){
+        int mid= (low + high)/2;
+        if(list[mid] == value){
+            return mid;
+        }else if(value < list[mid]){
+            return ayudaBinaria(list, low, mid-1, value);
+        }else if(value > list[mid]){
+            return ayudaBinaria(list, mid+1, high, value);
         }
     }
-
-    return v;
+    return -1;
 }
 
-template <class T>
-vector <T> Sorts<T> :: ordenaMerge(const vector<T> &prueba){
-    vector <T> v(prueba);
-    vector <T> temp(v.size());
-
-    mergeSplit(v, tmp, 0, v.size()-1);
-
-    retunr v;
-}
-
-template <class T>
-vector <T> Sorts<T> :: busqSecuencial(const vector<T> &prueba, int num){
-    vector <T> v(prueba);
-    vector <T> ans(num);
-
-    int n;
-    
-    for(int i= 0; i<v.size(); i++){
-        if (v[i]== ans){
-            n= i;
-        }else{
-            n= -1;
-        }
-    }
-
-    return n;
-}
-
-template <class T>
-vector <T> Sorts<T> :: busqBinaria(const vector<T> &prueba, int num){
-    vector <T> v(prueba);
-    vector <T> ans(num);
-
+template<class T>
+int Sorts<T>::busqBinaria(vector<T> &list, int val){
+    return ayudaBinaria(list, 0, list.size()-1, val);
 }
 
 #endif
