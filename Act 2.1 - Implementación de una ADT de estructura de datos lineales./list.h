@@ -1,8 +1,3 @@
-/*
-* Alumno: Erick Alfredo García Huerta
-* Matrícula: A01708119
-*/
-
 #ifndef _LIST_H_
 #define _LIST_H_
 
@@ -10,6 +5,8 @@
 #include <sstream>
 #include <cstring>
 #include <string>
+
+using namespace std;
 
 template <class T> class List;
 
@@ -44,9 +41,10 @@ class List{
 
 		std::string toString() const;
 		void insertion(T);
-		T	search(int);
+		int	search(int);
 		void update(int, T);
-		void	deleteAt(int);
+		T deleteAt(int);
+		T deleteFirst();
 
 		void clear();
 };
@@ -114,22 +112,21 @@ void List<T> :: insertion(T val){
 }
 
 template<class T>
-T List<T> :: search(int index){
-	/*Link<T> *p;
+int List<T> :: search(int val){
+	Link<T> *p;
 	int pos= 0;
 
 	p= head;
 
-	if(head == 0){
-		return -1;
-	}
+	while (pos < size)
+	{
+		if(p->value == val){
+			return pos;
+		}
 
-	while(pos != index){
 		p= p->next;
 		pos++;
 	}
-
-	//return p->value;*/
 	return -1;
 }
 
@@ -149,28 +146,45 @@ void List<T> :: update(int index, T val){
 }
 
 template<class T>
-void List<T> :: deleteAt(int index){
-	Link<T> *p, *q;
-	int pos;
+T List<T>::deleteFirst(){
+	Link<T> *p;
+	T value;
 
-	pos= 0;
 	p= head;
+	head= p->next;
+	value= p->value;
+
+	delete p;
+	size--;
+
+	return value;
+}
+
+template<class T>
+T List<T> :: deleteAt(int index){
+	T value;
+    Link<T> *p, *q;
+    int pos;
 
 	if(index == 0){
-		head= p->next;
-
-		delete p;
-		size--;
+		return deleteFirst();
 	}
 
+	pos = 0;
+    p = head;
+    q = 0;
+
 	while(pos != index){
+		q= p;
 		p= p->next;
 		pos++;
 	}
 
-	q= p->next;
-	
-	delete p;
+	value = p->value;
+    q->next = p->next;
+    delete p;
+    size--;
+    return value;
 }
 
 #endif
