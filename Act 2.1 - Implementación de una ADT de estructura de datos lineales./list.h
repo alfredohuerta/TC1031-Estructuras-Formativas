@@ -1,3 +1,7 @@
+/**
+* Alumno: Erick Alfredo García Huerta
+* Matrícula: A01708119
+*/
 #ifndef _LIST_H_
 #define _LIST_H_
 
