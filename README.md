@@ -4,4 +4,16 @@ Repositorio de ejemplo
 
 # Correcciones en actividades
  ### Act 1.2
- * Se agregó el programa NOTA AL FUTURO YO. REVISA EL PROBLEMA DEL MAIN CON EL BINARY SEARCH Y EL OTRO SEARCH
+ * Se corrigió la solución al problema.
+ * Se agregó análisis de complejidad
+ ### Act 2.1
+ * Se agregó la solución al problema.
+ * Se agregó análisis de complejidad
+ ## Act 2.2
+ * Se agregó la solución al problema.
+ * Se agregó análisis de complejidad.
+ ## Act 3.1
+ * Se agregó la solución al problema.
+ * Se agregó análisis de complejidad.
+ ## Act 3.2
+ * Se agregó análisis de complejidad.
