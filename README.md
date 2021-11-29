@@ -17,3 +17,6 @@ Repositorio de ejemplo
  * Se agregó análisis de complejidad.
  ## Act 3.2
  * Se agregó análisis de complejidad.
+ ## Act 4.1
+ * Se agregó la solución al problema.
+ * 
