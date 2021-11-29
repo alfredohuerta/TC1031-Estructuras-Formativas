@@ -1,6 +1,7 @@
 # TC1031_Estructuras_Formativas
 
-Repositorio de ejemplo
+Estructuras formativas:
+Erick Alfredo García Huerta - A01708119
 
 # Correcciones en actividades
  ### Act 1.2
@@ -20,5 +21,6 @@ Repositorio de ejemplo
  ## Act 4.1
  * Se agregó la solución al problema.
  * Se añadió análisis de complejidad.
-# Act 5.1
- * 
+## Act 5.1
+ * Se añadió solución al problema.
+ * Se añadió el análisis de complejidad
