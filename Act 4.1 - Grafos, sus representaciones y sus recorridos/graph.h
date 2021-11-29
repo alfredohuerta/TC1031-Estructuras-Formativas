@@ -37,17 +37,16 @@ private:
 		int *adjMatrix;
 
 public:
-		Graph();//
-		Graph(int);//
-		void loadGraphMat(string, int, int);//
+		Graph();
+		Graph(int);
+		void loadGraphMat(string, int, int);
 		void loadGraphList(const string &, int, int);
 
-		void addEdgeAdjMatrix(int, int);//
-		void addEdgeAdjList(int, int);//
+		void addEdgeAdjMatrix(int, int);
+		void addEdgeAdjList(int, int);
 
-		string printAdjMat();//
-		string printAdjMat_clean();//
-		string printAdjList();//
+		string printAdjMat();
+		string printAdjList();
 
 		string DFS(int, int);
 		string BFS(int, int);
@@ -62,12 +61,21 @@ public:
 		void sortAdjList();
 };
 
+/**
+ * @brief Construct a new Graph:: Graph object
+ * 
+ */
 Graph::Graph() {
 	edgesList = edgesMat = nodes = 0;
 	adjList= {};
 	adjMatrix= 0;
 }
 
+/**
+ * @brief Construct a new Graph:: Graph object
+ * 
+ * @param n valor del nodo.
+ */
 Graph::Graph(int n) {
 	nodes = n;
 	adjList = new vector<int>[nodes];
@@ -77,6 +85,13 @@ Graph::Graph(int n) {
 	edgesList = edgesMat = 0;
 }
 
+/**
+ * @brief función que carga el grafo desde un arhicvo de texto.
+ * 
+ * @param name nombre del archivo.
+ * @param a 
+ * @param b 
+ */
 void Graph::loadGraphMat(string name, int a, int b){
 	adjMatrix = new int [a*b];
 	nodes = a;
@@ -98,6 +113,13 @@ void Graph::loadGraphMat(string name, int a, int b){
 	}
 }
 
+/**
+ * @brief función que cargael grafo desde un archivo de texto
+ * 
+ * @param file_name nombre del archivo.
+ * @param a 
+ * @param b 
+ */
 void Graph::loadGraphList(const string &file_name, int a, int b){
 	nodes = a;
     adjList = new vector<int>[nodes];
@@ -117,18 +139,35 @@ void Graph::loadGraphList(const string &file_name, int a, int b){
 	}
 }
 
+/**
+ * @brief Función que agrega una arista al grafo (matríz)
+ * 
+ * @param u 
+ * @param v 
+ */
 void Graph::addEdgeAdjMatrix(int u, int v){
 	adjMatrix[u*nodes+v] = 1;
 	adjMatrix[v*nodes+u] = 1;
 	edgesMat++;
 }
 
+/**
+ * @brief Función que agrega una arista al grafo (lista)
+ * 
+ * @param u 
+ * @param v 
+ */
 void Graph::addEdgeAdjList(int u, int v){
 	adjList[u].push_back(v);
 	adjList[v].push_back(u);
 	edgesList++;
 }
 
+/**
+ * @brief Función que imprime los datos del grafo en una lista de adyacencia.
+ * 
+ * @return string datos de la lista
+ */
 string Graph::printAdjList(){
 	  sortAdjList();
 	  stringstream aux;
@@ -144,6 +183,11 @@ string Graph::printAdjList(){
 
 }
 
+/**
+ * @brief Función que imprime los datos del grafo en una matriz de adyacencia.
+ * 
+ * @return string datos de la matriz.
+ */
 string Graph::printAdjMat(){
 	stringstream aux;
 	for (int i = 0; i < nodes; i++){
@@ -154,28 +198,13 @@ string Graph::printAdjMat(){
 	return aux.str();
 }
 
-string Graph::printAdjMat_clean(){
-	stringstream aux;
-	aux << "\n nodes \t|";
-	for (int i = 0; i < nodes; i++){
-			aux << "\t" << i ;
-	}
-	aux << "\n";
-	for (int i = 0; i < nodes; i++){
-			aux << "__________";
-	}
-	aux << "\n";
-	for (int i = 0; i < nodes; i++){
-		 aux << i << "\t|";
-	   for (int j = 0; j < nodes; j++){
-			 aux << "\t" << adjMatrix[i*nodes+j];
-		 }
-	   aux << "\n";
-  }
-	return aux.str();
-}
-
-
+/**
+ * @brief Función que aplica un depth first search
+ * 
+ * @param start nodo desde el que se inicia
+ * @param goal nodo que se busca
+ * @return string camino que se siguió
+ */
 string Graph::DFS(int start, int goal){
 	stringstream aux;
 
@@ -190,6 +219,13 @@ string Graph::DFS(int start, int goal){
 	return aux.str();
 }
 
+/**
+ * @brief Función que aplica un breath first search
+ * 
+ * @param start nodo desde el que se inicia
+ * @param goal nodo que se busca
+ * @return string camino recorrido.
+ */
 string Graph::BFS(int start, int goal){
 	stringstream aux;
 
@@ -204,7 +240,16 @@ string Graph::BFS(int start, int goal){
     return aux.str();
 }
 
-
+/**
+ * @brief Función que lleva a cabo el dfs y controla el recorrido.
+ * 
+ * @param current nodo donde se encuentra actualmente el recorrido e inicia.
+ * @param goal nodo que se busca
+ * @param st stack donde encuentran el nodo que se está recorriendo
+ * @param visited nodos visitados
+ * @param paths caminos recorridos
+ * @param aux stringstream donde se almacenará paths
+ */
 void Graph::dfsHelper(int current, int goal, stack<int> &st, list<int> &visited, vector<vector<int>> &paths, stringstream &aux){
 	if(current == goal){
 		printVisited(visited, aux);
@@ -224,6 +269,16 @@ void Graph::dfsHelper(int current, int goal, stack<int> &st, list<int> &visited,
 	}
 }
 
+/**
+ * @brief Función donde se lleva a cabo del bfs y controla el recorrido
+ * 
+ * @param current nodo donde se encuentra actualmente el recorrido e inicia.
+ * @param goal nodo que se busca
+ * @param q queue donde se encuentran los datos actuales.
+ * @param visited lista donde se almacenan los nodos visitados
+ * @param paths vector de caminos recorridos
+ * @param aux  stringstream donde se imprimirá el recorrido.
+ */
 void Graph::bfsHelper(int current, int goal, queue<int> &q, list<int> &visited, vector<vector<int>> &paths, stringstream &aux){
 	if(current == goal){
 		printVisited(visited, aux);
@@ -243,6 +298,14 @@ void Graph::bfsHelper(int current, int goal, queue<int> &q, list<int> &visited, 
 	}
 }
 
+/**
+ * @brief Función que imprime el camino recorrido.
+ * 
+ * @param paths vector donde se almacenan los caminos.
+ * @param start nodo donde se inicia el recorrido.
+ * @param goal nodo donde termina el camino
+ * @param aux stringstream donde se imprime el camino
+ */
 void Graph::printPath(vector<vector<int>> &paths, int start, int goal, stringstream &aux){
 	aux << "path: ";
 	int node= paths[goal][0];
@@ -265,6 +328,12 @@ void Graph::printPath(vector<vector<int>> &paths, int start, int goal, stringstr
 	}
 }
 
+/**
+ * @brief Función que imprime los nodos visitados.
+ * 
+ * @param visited lista de nodos visitados.
+ * @param aux stringstream donde se imprimen los nodos visitados.
+ */
 void Graph::printVisited(list<int> visited, stringstream &aux){
 	aux << "visited: ";
 	while(!visited.empty()){
@@ -273,6 +342,14 @@ void Graph::printVisited(list<int> visited, stringstream &aux){
 	}
 }
 
+/**
+ * @brief Función que dice si un nodo se encuentra en la lista de nodos visitados o no.
+ * 
+ * @param lista lista donde se encuentran los nodos visitados.
+ * @param node nodo a buscar
+ * @return true se ha visitado el nodo
+ * @return false  no se ha visitado el nodo.
+ */
 bool Graph::contains(list<int> lista, int node){
 	list<int>::iterator it;
 
@@ -285,6 +362,9 @@ bool Graph::contains(list<int> lista, int node){
 	}
 }
 
+/**
+ * @brief Función que ordena el grafo en una lista de adyacencia
+ */
 void Graph::sortAdjList(){
 	for (int i = 0; i < nodes; i++){
 		sort(adjList[i].begin(),adjList[i].end());
